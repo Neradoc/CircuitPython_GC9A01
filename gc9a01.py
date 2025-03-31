@@ -20,12 +20,14 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 """
 
-# imports
+try:
+    from busdisplay import BusDisplay
+except ImportError:
+    from displayio import Display as BusDisplay
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/tylercrumpton/CircuitPython_GC9A01.git"
 
-import displayio
 
 _INIT_SEQUENCE = bytearray(
     b"\xFE\x00"  # Inter Register Enable1 (FEh)
@@ -53,7 +55,7 @@ _INIT_SEQUENCE = bytearray(
 )
 
 # pylint: disable=too-few-public-methods
-class GC9A01(displayio.Display):
+class GC9A01(BusDisplay):
     """GC9A01 displayio driver"""
 
     def __init__(self, bus, **kwargs):
